@@ -2,7 +2,7 @@ import {useState, useEffect} from "react"
 const API_URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd'
 
 import CoinCard from "./components/CoinCard"
-import FilterInput from "./componenets/FilterInput"
+import FilterInput from "./components/FilterInput"
 
 const App = () => {
     const [coins, setCoins] = useState([])
@@ -29,7 +29,7 @@ const App = () => {
           })
     }, [limit])
 
-    const filterCoins = coins.filter((coin) =>{
+    const filterCoins = coins.filter((coin) => {
       return coin.name.toLowerCase().includes(filter.toLowerCase()) || coin.symbol.toLowerCase().includes(filter.toLowerCase())
     })
 
@@ -38,20 +38,22 @@ const App = () => {
             <h1>Crypto App</h1>
             { loading && <p>Loading...</p>}
             { error && <div className="error">{error}</div>}
-            <div className="top-control">
-              <FiterInput filter={filter} onFilterChange={setFilter} />
-              <div className="controls">
-              <label htmlFor="limit">Show: </label>
-              <select value={limit} id="limit"
-                onChange={(e) => setLimit(Number(e.target.value))}
-              >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
+            <div className="top-controls">
+                <FilterInput filter={filter} onFilterChange={setFilter}/>
+                <div className="controls">
+                  <label htmlFor="limit">Show: </label>
+                  <select value={limit} id="limit"
+                    onChange={(e) => setLimit(Number(e.target.value))}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
             </div>
+
             { !loading && !error && (
                 <main className="grid">
                     { filterCoins.map((coin) => (
